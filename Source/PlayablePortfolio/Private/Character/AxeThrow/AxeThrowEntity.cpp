@@ -12,6 +12,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 
+#include "Weapons/BaseThrowable.h"
+
 AAxeThrowEntity::AAxeThrowEntity() :IdleLength(200), AimLength(125), IdleVec(0, 20, 40), AimVec(0, 60, 50)
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -24,7 +26,13 @@ AAxeThrowEntity::AAxeThrowEntity() :IdleLength(200), AimLength(125), IdleVec(0, 
 void AAxeThrowEntity::BeginPlay()
 {
 	Super::BeginPlay();
-
+	if (PickaxeRef)
+	{
+		Pickaxe = GetWorld()->SpawnActor<ABaseThrowable>(PickaxeRef, GetActorLocation(), GetActorRotation());
+		FAttachmentTransformRules* rules = new FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true);
+		Pickaxe->AttachToComponent(GetMesh(), *rules, "WeaponSocket");
+		Pickaxe->SetPlayerRef(this);
+	}
 }
 
 void AAxeThrowEntity::Tick(float DeltaTime)
@@ -65,6 +73,16 @@ void AAxeThrowEntity::ReleaseAim()
 
 void AAxeThrowEntity::ThrowAxe()
 {
+	if (isAiming)
+	{
+		if (IsValid(Pickaxe))
+		{
+			if (Pickaxe->GetIsThrown() == false)
+			{
+				isThrowing = true;
+			}
+		}
+	}
 }
 
 void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)

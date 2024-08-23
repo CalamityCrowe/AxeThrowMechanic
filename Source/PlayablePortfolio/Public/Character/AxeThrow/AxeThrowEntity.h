@@ -10,7 +10,7 @@
  * 
  */
 class UInputComponent;
-
+class ABaseThrowable; 
 
 UCLASS()
 class PLAYABLEPORTFOLIO_API AAxeThrowEntity : public ABaseEntity
@@ -58,5 +58,8 @@ private:
 
 	FVector desiredSocketOffset;
 
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
+	TObjectPtr<ABaseThrowable> Pickaxe;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
+	TSubclassOf<ABaseThrowable> PickaxeRef;
 };
