@@ -18,7 +18,7 @@ AAxeThrowEntity::AAxeThrowEntity() :IdleLength(200), AimLength(125), IdleVec(0, 
 	PlayerStats = CreateOptionalDefaultSubobject<UBaseStatsComponent>(TEXT("Player Stats"));
 
 	GetSpringArm()->TargetArmLength = IdleLength;
-	GetSpringArm()->SocketOffset = IdleVec;
+	GetSpringArm()->SocketOffset = IdleVec; 
 }
 
 void AAxeThrowEntity::BeginPlay()
@@ -35,7 +35,6 @@ void AAxeThrowEntity::Tick(float DeltaTime)
 void AAxeThrowEntity::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 	SetupActions(PlayerInputComponent);
 }
 
@@ -69,7 +68,6 @@ void AAxeThrowEntity::ThrowAxe()
 
 void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)
 {
-	ABaseEntity::SetupActions(PlayerInputComponent); 
 	if (UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		PEI->BindAction(GetInputs()->AttackActions[0], ETriggerEvent::Started, this, &AAxeThrowEntity::Aim);
