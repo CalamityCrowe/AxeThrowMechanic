@@ -30,7 +30,7 @@ void AAxeThrowEntity::BeginPlay()
 	{
 		Pickaxe = GetWorld()->SpawnActor<ABaseThrowable>(PickaxeRef, GetActorLocation(), GetActorRotation());
 		FAttachmentTransformRules* rules = new FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true);
-		Pickaxe->AttachToComponent(GetMesh(), *rules, "WeaponSocket");
+		Pickaxe->AttachToComponent(GetMesh(), *rules, "EquipSocket");
 		Pickaxe->SetPlayerRef(this);
 	}
 }
