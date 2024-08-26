@@ -42,22 +42,25 @@ ABaseThrowable::ABaseThrowable()
 
 void ABaseThrowable::Recall()
 {
-	StopTrace();
-
-	switch (AxeState)
+	if(AxeState!= EAxeStates::Idle)
 	{
-	case EAxeStates::Launched:
-		RecallLaunched();
-		break;
-	case EAxeStates::Lodged:
-		break;
-	default:
-		break;
-	}
-	AxeState = EAxeStates::Returning;
+		StopTrace();
+	
+		switch (AxeState)
+		{
+		case EAxeStates::Launched:
+			RecallLaunched();
+			break;
+		case EAxeStates::Lodged:
+			break;
+		default:
+			break;
+		}
+		AxeState = EAxeStates::Returning;
+		RecallEvent(); 
 
-	InitialiseReturnVariables();
-	ReturnPositionTimeline();
+		//InitialiseReturnVariables();
+	}
 
 }
 
@@ -92,8 +95,6 @@ void ABaseThrowable::InitialiseReturnVariables()
 	InitRot = GetActorRotation();
 	CameraRot = PlayerRef->GetCamera()->GetComponentRotation();
 	LodgePoint->SetRelativeRotation(FRotator::ZeroRotator);
-
-	float newSpeed =  AdjustAxeReturnTimelineSpeed(); 
 
 }
 
@@ -141,6 +142,7 @@ void ABaseThrowable::ThrowAxe()
 	SnapToStart();
 	LaunchAxe();
 	StartAxeSpin();
+	LineTraceTimeline(); 
 }
 
 void ABaseThrowable::RecallLaunched()
@@ -162,6 +164,7 @@ void ABaseThrowable::LaunchAxe()
 
 void ABaseThrowable::Catch(USceneComponent* newParent)
 {
+	//StopReturnSpin();
 	FAttachmentTransformRules attachRules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true); // tells the axe how to attach back to the player. 
 	AttachToComponent(newParent, attachRules, "WeaponSocket");
 	isThrown = false;
@@ -198,8 +201,8 @@ void ABaseThrowable::AxeLodgePull(float pull)
 void ABaseThrowable::ReturnPosition(float rot1, float rot2, float vectorCurve, float speedCurve, USkeletalMeshComponent* skeleton)
 {
 	float newScalar = vectorCurve * (DistanceFromChar / AxeReturnScale);
-	FVector socketLocation = skeleton->GetSocketLocation("HandSocket"); // gets the location of where the axe should be lodged into the model
-	FRotator socketRotation = skeleton->GetSocketRotation("HandSocket");
+	FVector socketLocation = skeleton->GetSocketLocation("WeaponSocket"); // gets the location of where the axe should be lodged into the model
+	FRotator socketRotation = skeleton->GetSocketRotation("WeaponSocket");
 
 	ReturnTargetLocations = UKismetMathLibrary::VLerp(InitLoc, PlayerRef->GetCamera()->GetRightVector() + socketLocation, speedCurve);
 	FRotator newRot = FRotator(CameraRot.Pitch, CameraRot.Yaw, CameraRot.Roll + ReturnTilt);
@@ -230,7 +233,7 @@ void ABaseThrowable::ReturnSpinAfterTime(float newPitch)
 
 float ABaseThrowable::GetClampedAxeDistanceFromChar(USkeletalMeshComponent* skeleton)
 {
-	FVector socketLoc = skeleton->GetSocketLocation("HandSocket");
+	FVector socketLoc = skeleton->GetSocketLocation("WeaponSocket");
 	FVector finalVector = GetActorLocation() - socketLoc; // gets the final vector from the hand socket and the actors current position 
 	return UKismetMathLibrary::FClamp(finalVector.Length(), 0, MaxDistance);
 }

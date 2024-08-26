@@ -37,24 +37,34 @@ protected:
 	virtual void BeginPlay() override;
 
 
+	UFUNCTION(BlueprintCallable)
+	void InitialiseReturnVariables();
+
+	UFUNCTION(BlueprintPure)
+	float AdjustAxeReturnTimelineSpeed();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StartAxeSpin();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StopAxeSpin();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartReturnSpin(float speed);
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StopReturnSpin();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StopAxeMovement();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void StopReturnTrace(); 
+	void StopReturnTrace();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StartReturnTrace();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void LineTraceTimeline();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StopTrace();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void ReturnPositionTimeline();
 	UFUNCTION(BlueprintImplementableEvent)
-	void ReturnPositionTimeline(); 
-
+	void RecallEvent();
 
 
 	UFUNCTION(BlueprintPure)
@@ -135,7 +145,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Throw Stats|Distance", meta = (AllowPrivateAccess = true))
 	float SpinLength;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Throw Stats|Distance", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Throw Stats|Distance", meta = (AllowPrivateAccess = true))
 	int ReturnSpins;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Throw Stats|Distance", meta = (AllowPrivateAccess = true))
 	bool isWiggle;
@@ -151,7 +161,6 @@ private:
 	UFUNCTION()
 	void OnOverLapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	void InitialiseReturnVariables();
 	void InitialiseReturnTrace();
 
 
@@ -173,12 +182,13 @@ private:
 	void ReturnPosition(float rot1, float rot2, float vectorCurve, float speedCurve, USkeletalMeshComponent* skeleton);
 	UFUNCTION(BlueprintCallable)
 	void ReturnSpin(float TimelineSpeed);
+	UFUNCTION(BlueprintCallable)
 	void ReturnSpinAfterTime(float newPitch);
 	float GetClampedAxeDistanceFromChar(USkeletalMeshComponent* skeleton);
 	FVector CalculateImpulseDirection();
 	FVector AdjustAxeImpactLocation();
 	void SnapToStart();
-	float AdjustAxeReturnTimelineSpeed();
+
 	float AdjustAxeImpactPitch();
 
 #pragma endregion

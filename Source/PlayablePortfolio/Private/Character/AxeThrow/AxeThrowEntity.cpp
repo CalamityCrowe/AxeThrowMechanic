@@ -32,6 +32,7 @@ void AAxeThrowEntity::BeginPlay()
 		FAttachmentTransformRules* rules = new FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true);
 		Pickaxe->AttachToComponent(GetMesh(), *rules, "EquipSocket");
 		Pickaxe->SetPlayerRef(this);
+		isEquipped = false;
 	}
 }
 
@@ -73,7 +74,7 @@ void AAxeThrowEntity::ReleaseAim()
 
 void AAxeThrowEntity::ThrowAxe()
 {
-	if (isAiming)
+	if (isAiming && isEquipped)
 	{
 		if (IsValid(Pickaxe))
 		{
@@ -101,6 +102,11 @@ void AAxeThrowEntity::Recall()
 	}
 }
 
+void AAxeThrowEntity::Equip()
+{
+	EquipAnim();
+}
+
 void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)
 {
 	ABaseEntity::SetupActions(PlayerInputComponent);
@@ -110,6 +116,7 @@ void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)
 		PEI->BindAction(GetInputs()->AttackActions[0], ETriggerEvent::Completed, this, &AAxeThrowEntity::ReleaseAim);
 		PEI->BindAction(GetInputs()->AttackActions[1], ETriggerEvent::Started, this, &AAxeThrowEntity::ThrowAxe);
 		PEI->BindAction(GetInputs()->AttackActions[2], ETriggerEvent::Started, this, &AAxeThrowEntity::Recall);
+		PEI->BindAction(GetInputs()->AttackActions[3], ETriggerEvent::Started, this, &AAxeThrowEntity::Equip); 
 
 	}
 }

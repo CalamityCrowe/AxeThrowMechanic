@@ -29,6 +29,8 @@ protected:
 	void LerpCamera(); 
 	UFUNCTION(BlueprintCallable)
 	void LerpCameraAlpha(float Alpha);
+	UFUNCTION(BlueprintImplementableEvent)
+	void EquipAnim(); 
 private: 
 	UFUNCTION()
 	void Aim();
@@ -43,6 +45,7 @@ private:
 	UFUNCTION()
 	void Recall(); 
 	UFUNCTION()
+	void Equip(); 
 
 	virtual void SetupActions(UInputComponent* PlayerInputComponent) override; 
 
@@ -51,6 +54,8 @@ private:
 	bool isAiming;
 	UPROPERTY(BlueprintReadWrite, Category = "Axe Stats", meta = (AllowPrivateAccess = true))
 	bool isThrowing;
+	UPROPERTY(BlueprintReadWrite, Category = "Axe Stats", meta = (AllowPrivateAccess = true))
+	bool isEquipped; 
 
 	TObjectPtr<class UBaseStatsComponent> PlayerStats;
 
