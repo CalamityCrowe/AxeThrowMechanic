@@ -37,6 +37,13 @@ private:
 	UFUNCTION()
 	void ThrowAxe();
 
+	UFUNCTION(BlueprintCallable)
+	void Catch(); 
+
+	UFUNCTION()
+	void Recall(); 
+	UFUNCTION()
+
 	virtual void SetupActions(UInputComponent* PlayerInputComponent) override; 
 
 private:

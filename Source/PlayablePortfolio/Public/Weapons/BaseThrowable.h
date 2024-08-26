@@ -11,7 +11,7 @@ class UDamageComponent;
 class AAxeThrowEntity;
 class USkeletalMeshComponent;
 
-UENUM()
+UENUM(Blueprintable)
 enum class EAxeStates : uint8
 {
 	Idle		UMETA(DisplayName = "Idle"),
@@ -29,9 +29,14 @@ public:
 	// Sets default values for this actor's properties
 	ABaseThrowable();
 
+	void Recall();
+	void Catch(USceneComponent* newParent);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StartAxeSpin();
@@ -39,6 +44,23 @@ protected:
 	void StopAxeSpin();
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void StopAxeMovement();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StopReturnTrace(); 
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartReturnTrace();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void LineTraceTimeline();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StopTrace();
+	UFUNCTION(BlueprintImplementableEvent)
+	void ReturnPositionTimeline(); 
+
+
+
+	UFUNCTION(BlueprintPure)
+	bool LineTrace(FHitResult& OutHit);
+	UFUNCTION(BlueprintPure)
+	bool InitSphere(FHitResult& OutHit);
 
 public:
 	// Called every frame
@@ -65,18 +87,20 @@ private:
 #pragma endregion
 
 #pragma region Variables
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Player", meta = (AllowPrivateAccess = true))
 	TObjectPtr<AAxeThrowEntity> PlayerRef;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "State", meta = (AllowPrivateAccess = true))
 	EAxeStates AxeState = EAxeStates::Idle;
 
 	FVector InitLoc;
 	FVector TargLoc;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Throw Stats|Positions", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Throw Stats|Positions", meta = (AllowPrivateAccess = true))
 	FVector ImpactLoc;
 	FVector ImpactNormal;
 	FVector ThrowDir;
 	FVector CameraLoc;
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Throw Stats|Positions", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Throw Stats|Positions", meta = (AllowPrivateAccess = true))
 	FVector AxeLocationLastTick;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Throw Stats|Positions", meta = (AllowPrivateAccess = true))
 	FVector ReturnTargetLocations;
@@ -138,13 +162,14 @@ private:
 	void ThrowAxe();
 	void RecallLaunched();
 	void LaunchAxe();
-	void Catch(USceneComponent* newParent);
 
-
+	UFUNCTION(BlueprintCallable)
 	void HandleImpact(FVector ImpactNormal, FVector ImpactLocation);
+	UFUNCTION(BlueprintCallable)
 	void LodgeAxe();
 	void AdjustAxeReturnLocation();
 	void AxeLodgePull(float pull);
+	UFUNCTION(BlueprintCallable)
 	void ReturnPosition(float rot1, float rot2, float vectorCurve, float speedCurve, USkeletalMeshComponent* skeleton);
 	UFUNCTION(BlueprintCallable)
 	void ReturnSpin(float TimelineSpeed);

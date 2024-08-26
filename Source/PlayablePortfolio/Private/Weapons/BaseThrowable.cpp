@@ -40,6 +40,27 @@ ABaseThrowable::ABaseThrowable()
 	ReturnSpinRate = 0.35f;
 }
 
+void ABaseThrowable::Recall()
+{
+	StopTrace();
+
+	switch (AxeState)
+	{
+	case EAxeStates::Launched:
+		RecallLaunched();
+		break;
+	case EAxeStates::Lodged:
+		break;
+	default:
+		break;
+	}
+	AxeState = EAxeStates::Returning;
+
+	InitialiseReturnVariables();
+	ReturnPositionTimeline();
+
+}
+
 // Called when the game starts or when spawned
 void ABaseThrowable::BeginPlay()
 {
@@ -71,14 +92,18 @@ void ABaseThrowable::InitialiseReturnVariables()
 	InitRot = GetActorRotation();
 	CameraRot = PlayerRef->GetCamera()->GetComponentRotation();
 	LodgePoint->SetRelativeRotation(FRotator::ZeroRotator);
+
+	float newSpeed =  AdjustAxeReturnTimelineSpeed(); 
+
 }
 
 void ABaseThrowable::InitialiseReturnTrace()
 {
 	AxeLocationLastTick = ReturnTargetLocations;
+	StartReturnTrace(); 
 }
 
-bool ABaseThrowable::LineTraceMethod(FHitResult& OutHit)
+bool ABaseThrowable::LineTrace(FHitResult& OutHit)
 {
 	FVector Start = GetActorLocation();
 	FVector End = GetVelocity();
@@ -95,7 +120,7 @@ bool ABaseThrowable::LineTraceMethod(FHitResult& OutHit)
 	return GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECC_Visibility, params);
 }
 
-bool ABaseThrowable::InitSphereTrace(FHitResult& OutHit)
+bool ABaseThrowable::InitSphere(FHitResult& OutHit)
 {
 	FVector Start = ReturnTargetLocations;
 	FVector End = AxeLocationLastTick;
@@ -138,7 +163,7 @@ void ABaseThrowable::LaunchAxe()
 void ABaseThrowable::Catch(USceneComponent* newParent)
 {
 	FAttachmentTransformRules attachRules = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepWorld, true); // tells the axe how to attach back to the player. 
-	AttachToComponent(newParent, attachRules, "HandSocket");
+	AttachToComponent(newParent, attachRules, "WeaponSocket");
 	isThrown = false;
 	AxeState = EAxeStates::Idle;
 }

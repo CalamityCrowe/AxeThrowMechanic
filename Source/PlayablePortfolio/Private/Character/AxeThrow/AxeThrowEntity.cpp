@@ -85,13 +85,31 @@ void AAxeThrowEntity::ThrowAxe()
 	}
 }
 
+void AAxeThrowEntity::Catch()
+{
+	if (Pickaxe)
+	{
+		Pickaxe->Catch(GetMesh());
+	}
+}
+
+void AAxeThrowEntity::Recall()
+{
+	if (Pickaxe)
+	{
+		Pickaxe->Recall();
+	}
+}
+
 void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)
 {
-	ABaseEntity::SetupActions(PlayerInputComponent); 
+	ABaseEntity::SetupActions(PlayerInputComponent);
 	if (UEnhancedInputComponent* PEI = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		PEI->BindAction(GetInputs()->AttackActions[0], ETriggerEvent::Started, this, &AAxeThrowEntity::Aim);
 		PEI->BindAction(GetInputs()->AttackActions[0], ETriggerEvent::Completed, this, &AAxeThrowEntity::ReleaseAim);
 		PEI->BindAction(GetInputs()->AttackActions[1], ETriggerEvent::Started, this, &AAxeThrowEntity::ThrowAxe);
+		PEI->BindAction(GetInputs()->AttackActions[2], ETriggerEvent::Started, this, &AAxeThrowEntity::Recall);
+
 	}
 }
