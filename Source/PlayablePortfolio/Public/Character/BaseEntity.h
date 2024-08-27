@@ -21,9 +21,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	UInputData* GetInputs() { return Inputs;  }
+	UInputData* GetInputs() { return Inputs; }
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -31,20 +31,20 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	USpringArmComponent* GetSpringArm() { return SpringArm; }
 	UCameraComponent* GetCamera() { return Camera; }
-	virtual void SetupActions(UInputComponent* PlayerInputComponent) ; 
-	
-private: 
+	virtual void SetupActions(UInputComponent* PlayerInputComponent);
+
+private:
 	UFUNCTION()
 	virtual void Move(const FInputActionValue& Value);
 	UFUNCTION()
-	virtual void RotateCamera(const FInputActionValue& Value); 
-	
-	void BindMappingContexts(UInputComponent* PlayerInputComponent); 
+	virtual void RotateCamera(const FInputActionValue& Value);
+
+	void BindMappingContexts(UInputComponent* PlayerInputComponent);
 
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
-	TObjectPtr<UCameraComponent>Camera; 
+	TObjectPtr<UCameraComponent>Camera;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
 	TObjectPtr<USpringArmComponent>SpringArm;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input", meta = (AllowPrivateAccess = true))

@@ -251,7 +251,7 @@ FVector ABaseThrowable::AdjustAxeImpactLocation()
 	Z_Adjustment = pitch; // makes the z adjustment the value of pitch
 	ImpactLoc += FVector(0, 0, pitch); // assigns the impact loc to have the pithc value assigned to Z
 
-	FVector finalLoc = ImpactLoc - (GetActorLocation() - LodgePoint->GetComponentLocation()); // gets the final location based on the subtraction of the lodge point location from the actors and then subtracts tat from the impact location
+	FVector finalLoc = ImpactLoc - (LodgePoint->GetComponentLocation() - GetActorLocation()); // gets the final location based on the subtraction of the lodge point location from the actors and then subtracts tat from the impact location
 
 	return finalLoc;
 }
