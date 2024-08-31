@@ -68,7 +68,7 @@ void AAxeThrowEntity::Aim()
 void AAxeThrowEntity::ReleaseAim()
 {
 	isAiming = false;
-	GetCharacterMovement()->MaxWalkSpeed = 600.f;
+	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	LerpCamera();
 }
 
