@@ -204,7 +204,8 @@ void ABaseThrowable::ReturnPosition(float rot1, float rot2, float vectorCurve, f
 	FVector socketLocation = skeleton->GetSocketLocation("WeaponSocket"); // gets the location of where the axe should be lodged into the model
 	FRotator socketRotation = skeleton->GetSocketRotation("WeaponSocket");
 
-	ReturnTargetLocations = UKismetMathLibrary::VLerp(InitLoc, PlayerRef->GetCamera()->GetRightVector() + socketLocation, speedCurve);
+
+	ReturnTargetLocations = UKismetMathLibrary::VLerp(InitLoc, (PlayerRef->GetCamera()->GetRightVector() * newScalar) + socketLocation, speedCurve);
 	FRotator newRot = FRotator(CameraRot.Pitch, CameraRot.Yaw, CameraRot.Roll + ReturnTilt);
 	FRotator lerpRot = UKismetMathLibrary::RLerp(InitRot, newRot, rot1, true);
 	FRotator finalRotation = UKismetMathLibrary::RLerp(lerpRot, socketRotation, rot2, true);

@@ -15,7 +15,10 @@ public class PlayablePortfolio : ModuleRules
             "Engine",
             "InputCore",
             "EnhancedInput",
-            "Niagara"
+            "Niagara",
+            "Chaos",
+            "ChaosSolverEngine",
+            "GeometryCollectionEngine"
         });
 
         PrivateDependencyModuleNames.AddRange(new string[] { });

@@ -131,7 +131,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Throw Stats|Speed", meta = (AllowPrivateAccess = true))
 	float AxeReturnSpeed;
-
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly, Category = "Throw Stats| Distance", meta = (AllowPrivateAccess = true))
 	float AxeReturnScale;
 	float ReturnTilt;
 
