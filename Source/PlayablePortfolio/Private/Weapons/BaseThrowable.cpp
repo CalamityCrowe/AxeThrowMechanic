@@ -57,6 +57,7 @@ void ABaseThrowable::Recall()
 			break;
 		}
 		AxeState = EAxeStates::Returning;
+		InitialiseReturnTrace(); 
 		RecallEvent(); 
 
 		//InitialiseReturnVariables();
@@ -130,7 +131,7 @@ bool ABaseThrowable::InitSphere(FHitResult& OutHit)
 	ignoreActors.Add(this);
 	ignoreActors.Add(PlayerRef);
 
-	return UKismetSystemLibrary::SphereTraceSingle(GetWorld(), Start, End, 5.0f, ETraceTypeQuery::TraceTypeQuery1, false, ignoreActors, EDrawDebugTrace::None, OutHit, true);
+	return UKismetSystemLibrary::SphereTraceSingle(GetWorld(), Start, End, 5.0f, ETraceTypeQuery::TraceTypeQuery1,false, ignoreActors, EDrawDebugTrace::None, OutHit, true,FColor::Red,FLinearColor::Green, 5.0f);
 }
 
 void ABaseThrowable::ThrowAxe()

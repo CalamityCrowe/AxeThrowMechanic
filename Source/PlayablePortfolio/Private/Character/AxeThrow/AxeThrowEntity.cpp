@@ -60,16 +60,24 @@ void AAxeThrowEntity::LerpCameraAlpha(float Alpha)
 
 void AAxeThrowEntity::Aim()
 {
-	isAiming = true;
-	GetCharacterMovement()->MaxWalkSpeed = 250.f;
-	LerpCamera();
+	if (isEquipped)
+	{
+
+
+		isAiming = true;
+		GetCharacterMovement()->MaxWalkSpeed = 350.f;
+		LerpCamera();
+	}
 }
 
 void AAxeThrowEntity::ReleaseAim()
 {
-	isAiming = false;
-	GetCharacterMovement()->MaxWalkSpeed = 400.f;
-	LerpCamera();
+	if (isEquipped)
+	{
+		isAiming = false;
+		GetCharacterMovement()->MaxWalkSpeed = 600.f;
+		LerpCamera();
+	}
 }
 
 void AAxeThrowEntity::ThrowAxe()
@@ -116,7 +124,7 @@ void AAxeThrowEntity::SetupActions(UInputComponent* PlayerInputComponent)
 		PEI->BindAction(GetInputs()->AttackActions[0], ETriggerEvent::Completed, this, &AAxeThrowEntity::ReleaseAim);
 		PEI->BindAction(GetInputs()->AttackActions[1], ETriggerEvent::Started, this, &AAxeThrowEntity::ThrowAxe);
 		PEI->BindAction(GetInputs()->AttackActions[2], ETriggerEvent::Started, this, &AAxeThrowEntity::Recall);
-		PEI->BindAction(GetInputs()->AttackActions[3], ETriggerEvent::Started, this, &AAxeThrowEntity::Equip); 
+		PEI->BindAction(GetInputs()->AttackActions[3], ETriggerEvent::Started, this, &AAxeThrowEntity::Equip);
 
 	}
 }

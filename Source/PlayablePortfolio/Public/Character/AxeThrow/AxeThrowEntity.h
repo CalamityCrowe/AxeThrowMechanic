@@ -23,7 +23,8 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void CatchMontage();
 protected: 
 	UFUNCTION(BlueprintImplementableEvent)
 	void LerpCamera(); 
@@ -41,6 +42,7 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void Catch(); 
+
 
 	UFUNCTION()
 	void Recall(); 
