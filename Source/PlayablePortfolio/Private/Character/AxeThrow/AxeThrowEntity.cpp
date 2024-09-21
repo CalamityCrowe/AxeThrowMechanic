@@ -4,6 +4,7 @@
 #include "Character/AxeThrow/AxeThrowEntity.h"
 #include <Kismet/KismetMathLibrary.h>
 #include "Components/BaseStatsComponent.h"
+#include "Components/FloorCheckComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -13,11 +14,13 @@
 #include "InputMappingContext.h"
 
 #include "Weapons/BaseThrowable.h"
+#include <Kismet/GameplayStatics.h>
 
 AAxeThrowEntity::AAxeThrowEntity() :IdleLength(200), AimLength(125), IdleVec(0, 20, 40), AimVec(0, 60, 50)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	PlayerStats = CreateOptionalDefaultSubobject<UBaseStatsComponent>(TEXT("Player Stats"));
+	FloorCheckComponent = CreateOptionalDefaultSubobject<UFloorCheckComponent>(TEXT("Floor Check Component"));
 
 	GetSpringArm()->TargetArmLength = IdleLength;
 	GetSpringArm()->SocketOffset = IdleVec;
@@ -99,6 +102,7 @@ void AAxeThrowEntity::Catch()
 	if (Pickaxe)
 	{
 		Pickaxe->Catch(GetMesh());
+		ShakeCamera();
 	}
 }
 

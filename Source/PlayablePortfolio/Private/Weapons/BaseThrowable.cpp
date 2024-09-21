@@ -42,7 +42,7 @@ ABaseThrowable::ABaseThrowable()
 
 void ABaseThrowable::Recall()
 {
-	if(AxeState!= EAxeStates::Idle)
+	if(AxeState!= EAxeStates::Idle && AxeState!= EAxeStates::Returning)
 	{
 		StopTrace();
 	
@@ -170,6 +170,7 @@ void ABaseThrowable::Catch(USceneComponent* newParent)
 	AttachToComponent(newParent, attachRules, "WeaponSocket");
 	isThrown = false;
 	AxeState = EAxeStates::Idle;
+	
 }
 
 void ABaseThrowable::HandleImpact(FVector Normal, FVector Location)

@@ -10,7 +10,10 @@
  * 
  */
 class UInputComponent;
+class UFloorCheckComponent;
+class UBaseStatsComponent;
 class ABaseThrowable; 
+
 
 UCLASS()
 class PLAYABLEPORTFOLIO_API AAxeThrowEntity : public ABaseEntity
@@ -25,6 +28,9 @@ public:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void CatchMontage();
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShakeCamera();
+
 protected: 
 	UFUNCTION(BlueprintImplementableEvent)
 	void LerpCamera(); 
@@ -59,7 +65,8 @@ private:
 	UPROPERTY(BlueprintReadWrite, Category = "Axe Stats", meta = (AllowPrivateAccess = true))
 	bool isEquipped; 
 
-	TObjectPtr<class UBaseStatsComponent> PlayerStats;
+	TObjectPtr<UBaseStatsComponent> PlayerStats;
+	TObjectPtr<UFloorCheckComponent> FloorCheckComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = true))
 	float IdleLength;
@@ -76,4 +83,7 @@ private:
 	TObjectPtr<ABaseThrowable> Pickaxe;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon", meta = (AllowPrivateAccess = true))
 	TSubclassOf<ABaseThrowable> PickaxeRef;
+
+	
+	
 };

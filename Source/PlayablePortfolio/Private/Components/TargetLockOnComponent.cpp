@@ -6,6 +6,7 @@
 #include "Kismet/KismetSystemLibrary.h" // Include for tracing functions
 #include "Kismet/KismetMathLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Character/Enemy/EnemyTarget.h"
 
 // Sets default values for this component's properties
 UTargetLockOnComponent::UTargetLockOnComponent()
@@ -47,6 +48,7 @@ void UTargetLockOnComponent::TriggerTargetLockOn()
 		{
 			PlayerRef->GetController()->SetIgnoreLookInput(true);
 			CurrentTarget = Target;
+			Cast<AEnemyTarget>(CurrentTarget)->StartWidgetRotation();
 			bIsLockedOn = true;
 			GetWorld()->GetTimerManager().SetTimer(LockOnTimerHandle, this, &UTargetLockOnComponent::TargetLockOn, 0.01f, true);
 		}
@@ -81,6 +83,7 @@ void UTargetLockOnComponent::TargetLockOn()
 void UTargetLockOnComponent::StopTargetLockOn()
 {
 	bIsLockedOn = false;
+	Cast<AEnemyTarget>(CurrentTarget)->StopWidgetRotation();
 	GetWorld()->GetTimerManager().ClearTimer(LockOnTimerHandle);
 	PlayerRef->GetController()->SetIgnoreLookInput(false);
 }
@@ -130,7 +133,9 @@ void UTargetLockOnComponent::SwitchTarget(float AxisValue)
 		}
 		if(newTarget)
 		{
+			Cast<AEnemyTarget>(CurrentTarget)->StopWidgetRotation();
 			CurrentTarget = newTarget;
+			Cast<AEnemyTarget>(CurrentTarget)->StartWidgetRotation();
 		}
 	}
 }

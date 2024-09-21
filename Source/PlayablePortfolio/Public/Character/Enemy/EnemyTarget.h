@@ -9,6 +9,8 @@
 /**
  * 
  */
+class UWidgetComponent;
+
 UCLASS()
 class PLAYABLEPORTFOLIO_API AEnemyTarget : public ABaseEntity
 {
@@ -20,4 +22,16 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void StartWidgetRotation();
+	void StopWidgetRotation();
+
+private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UWidgetComponent> HealthBar;
+
+	FTimerHandle PointWidgetTimer;
+
+	void RotateWidget();
+
 };
