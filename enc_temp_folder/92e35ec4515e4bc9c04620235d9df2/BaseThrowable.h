@@ -10,7 +10,6 @@ class UProjectileMovementComponent;
 class UDamageComponent;
 class AAxeThrowEntity;
 class USkeletalMeshComponent;
-class UMeleeAttackComponent;
 
 UENUM(Blueprintable)
 enum class EAxeStates : uint8
@@ -95,11 +94,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components|Audio", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UAudioComponent> AudioComponent;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components|Melee", meta = (AllowPrivateAccess = true))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components|Audio", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UDamageComponent> DamageComponent;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components|Melee",meta = (AllowPrivateAccess = true))
-	TObjectPtr<UMeleeAttackComponent>MeleeComponent ;
-
 #pragma endregion
 
 #pragma region Variables

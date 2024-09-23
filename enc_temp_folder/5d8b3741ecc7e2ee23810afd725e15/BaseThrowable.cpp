@@ -11,7 +11,6 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/DamageComponent.h"
-#include "Components/MeleeAttackComponent.h"
 
 // Sets default values
 ABaseThrowable::ABaseThrowable()
@@ -33,7 +32,6 @@ ABaseThrowable::ABaseThrowable()
 
 	ProjectileMovement = CreateOptionalDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	DamageComponent = CreateOptionalDefaultSubobject<UDamageComponent>(FName("Damage"));
-	MeleeComponent = CreateOptionalDefaultSubobject<UMeleeAttackComponent>(FName("Melee Component"));
 
 	AxeThrowSpeed = 4000;
 	MaxDistance = 30000;
