@@ -40,14 +40,14 @@ void UMeleeAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UMeleeAttackComponent::HitDetect()
 {
-	FVector start = (AttackCount == 3) ? ThrowableReference->GetPlayerRef()->GetMesh()->GetSocketLocation("hand_l") : ThrowableReference->GetActorLocation();
+	FVector start = (AttackCount == 2) ? ThrowableReference->GetPlayerRef()->GetMesh()->GetSocketLocation("hand_l") : ThrowableReference->GetActorLocation();
 	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypes;
 	objectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
 
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(ThrowableReference->GetPlayerRef());
 	TArray<FHitResult> hits;
-	UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, start, 20, objectTypes, false, actorsToIgnore, EDrawDebugTrace::ForDuration, hits, true);
+	UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, start, 5, objectTypes, false, actorsToIgnore, EDrawDebugTrace::ForDuration, hits, true);
 	if(hits.Num() > 0)
 	{
 		for (FHitResult hit : hits)

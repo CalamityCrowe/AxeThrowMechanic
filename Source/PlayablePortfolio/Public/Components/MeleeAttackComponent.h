@@ -33,8 +33,9 @@ private:
 
 	UPROPERTY(EditdefaultsOnly, BlueprintReadOnly, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<ABaseThrowable> ThrowableReference;
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "bools", meta = (AllowPrivateAccess = true))
 	bool bIsAttacking = false;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Count", meta = (AllowPrivateAccess = true))
 	int AttackCount = 0;
 
 	UPROPERTY(EditdefaultsOnly, BlueprintReadOnly, Category = "Montages", meta = (AllowPrivateAccess = true))
