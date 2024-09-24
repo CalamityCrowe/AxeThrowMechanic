@@ -1,2 +1,2 @@
-# Playable Portfolio
- A full playable piece of all my portfolio pieces
+# Axe Throw Mechanic
+ A sample of code that handles the axe throw mechanics logic
