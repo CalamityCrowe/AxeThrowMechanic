@@ -6,11 +6,14 @@
 #include "Camera/CameraComponent.h"
 #include "Components/WidgetComponent.h"
 #include <Kismet/KismetMathLibrary.h>
+#include <Components/BaseStatsComponent.h>
 AEnemyTarget::AEnemyTarget()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	GetSpringArm()->DestroyComponent();
 	GetCamera()->DestroyComponent();
+
+	HealthComponent = CreateDefaultSubobject<UBaseStatsComponent>(TEXT("Health Component"));
 
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>(TEXT("Health Bar"));
 	HealthBar->SetupAttachment(GetMesh());

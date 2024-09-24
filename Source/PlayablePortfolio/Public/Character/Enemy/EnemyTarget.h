@@ -10,7 +10,7 @@
  * 
  */
 class UWidgetComponent;
-
+class UBaseStatsComponent;
 UCLASS()
 class PLAYABLEPORTFOLIO_API AEnemyTarget : public ABaseEntity
 {
@@ -26,6 +26,8 @@ public:
 	void StartWidgetRotation();
 	void StopWidgetRotation();
 
+	UBaseStatsComponent* GetHealthComponent() { return HealthComponent; }
+
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UWidgetComponent> HealthBar;
@@ -34,4 +36,6 @@ private:
 
 	void RotateWidget();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UBaseStatsComponent> HealthComponent;
 };

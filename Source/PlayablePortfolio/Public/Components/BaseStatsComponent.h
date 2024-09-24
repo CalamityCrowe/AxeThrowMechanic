@@ -26,6 +26,7 @@ public:
 
 	void DamageHealth(float DamageAmount);
 
+	UFUNCTION(BlueprintPure)
 	float GetHealthPercentage() { return Health / MaxHealth; }
 private:
 

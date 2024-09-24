@@ -26,11 +26,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void DoAttack(); 
+	UFUNCTION(BlueprintCallable)
+	void HitDetect();
 
 private:
-	UPROPERTY(EditdefaultsOnly, BlueprintReadOnly, Category = "Reference", meta = (AllowPrivateAccess = true))
-	TObjectPtr<AAxeThrowEntity> OwnerEntity;
+
 	UPROPERTY(EditdefaultsOnly, BlueprintReadOnly, Category = "Reference", meta = (AllowPrivateAccess = true))
 	TObjectPtr<ABaseThrowable> ThrowableReference;
 	

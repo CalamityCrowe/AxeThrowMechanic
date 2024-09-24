@@ -36,6 +36,7 @@ void AAxeThrowEntity::BeginPlay()
 		Pickaxe->AttachToComponent(GetMesh(), *rules, "EquipSocket");
 		Pickaxe->SetPlayerRef(this);
 		isEquipped = false;
+
 	}
 }
 
@@ -91,6 +92,7 @@ void AAxeThrowEntity::ThrowAxe()
 		{
 			if (Pickaxe->GetIsThrown() == false)
 			{
+				ThrowMontage();
 				isThrowing = true;
 			}
 		}

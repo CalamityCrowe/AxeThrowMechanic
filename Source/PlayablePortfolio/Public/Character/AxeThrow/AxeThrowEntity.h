@@ -30,6 +30,8 @@ public:
 	void CatchMontage();
 	UFUNCTION(BlueprintImplementableEvent)
 	void ShakeCamera();
+	UFUNCTION(BlueprintImplementableEvent)
+	void ThrowMontage();
 
 protected: 
 	UFUNCTION(BlueprintImplementableEvent)

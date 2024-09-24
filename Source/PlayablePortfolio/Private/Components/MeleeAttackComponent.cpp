@@ -4,7 +4,10 @@
 #include "Components/MeleeAttackComponent.h"
 #include "Weapons/BaseThrowable.h"
 #include "Character/AxeThrow/AxeThrowEntity.h"
-#include "Animation/AnimInstance.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include <Character/Enemy/EnemyTarget.h>
+#include "Components/BaseStatsComponent.h"
+
 // Sets default values for this component's properties
 UMeleeAttackComponent::UMeleeAttackComponent()
 {
@@ -20,10 +23,9 @@ UMeleeAttackComponent::UMeleeAttackComponent()
 void UMeleeAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	if(GetOwner()->GetClass() == ABaseThrowable::StaticClass())
+	if(ThrowableReference = Cast<ABaseThrowable>(GetOwner()))
 	{
-		ThrowableReference = Cast<ABaseThrowable>(GetOwner());
-		OwnerEntity = ThrowableReference->GetPlayerRef();
+
 	}	
 }
 
@@ -34,6 +36,28 @@ void UMeleeAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UMeleeAttackComponent::HitDetect()
+{
+	FVector start = ThrowableReference->GetActorLocation();
+	TArray<TEnumAsByte<EObjectTypeQuery>> objectTypes;
+	objectTypes.Add(UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_Pawn));
+
+	TArray<AActor*> actorsToIgnore;
+	actorsToIgnore.Add(ThrowableReference->GetPlayerRef());
+	TArray<FHitResult> hits;
+	UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, start, 5, objectTypes, false, actorsToIgnore, EDrawDebugTrace::ForDuration, hits, true);
+	if(hits.Num() > 0)
+	{
+		for (FHitResult hit : hits)
+		{
+			if (AEnemyTarget* enemy = Cast<AEnemyTarget>(hit.GetActor())) 
+			{
+				enemy->GetHealthComponent()->DamageHealth(10);
+			}
+		}
+	}
 }
 
 
