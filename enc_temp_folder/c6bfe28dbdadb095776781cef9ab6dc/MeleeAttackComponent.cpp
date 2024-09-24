@@ -54,7 +54,7 @@ void UMeleeAttackComponent::HitDetect()
 		{
 			if (AEnemyTarget* enemy = Cast<AEnemyTarget>(hit.GetActor())) 
 			{
-				enemy->GetHealthComponent()->DamageHealth(1);
+				enemy->GetHealthComponent()->DamageHealth(10);
 			}
 		}
 	}
