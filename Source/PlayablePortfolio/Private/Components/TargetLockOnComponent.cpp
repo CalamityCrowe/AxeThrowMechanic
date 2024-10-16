@@ -75,7 +75,6 @@ void UTargetLockOnComponent::TargetLockOn()
 		FRotator LookRot = GetLockOnCameraRotation(CurrentTarget);
 		FRotator ContRot = PlayerRef->GetController()->GetControlRotation();
 		FRotator NewRot = UKismetMathLibrary::RInterpTo(ContRot, LookRot, 0.01, 20.0f);
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, "AAAAAAAAAAAAA");
 		PlayerRef->GetController()->SetControlRotation(FRotator(NewRot.Pitch, NewRot.Yaw, ContRot.Roll));
 	}
 }

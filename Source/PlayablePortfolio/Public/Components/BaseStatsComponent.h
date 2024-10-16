@@ -24,7 +24,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void DamageHealth(float DamageAmount);
+	UFUNCTION(BlueprintCallable)
+	bool DamageHealth(float DamageAmount);
 
 	UFUNCTION(BlueprintPure)
 	float GetHealthPercentage() { return Health / MaxHealth; }

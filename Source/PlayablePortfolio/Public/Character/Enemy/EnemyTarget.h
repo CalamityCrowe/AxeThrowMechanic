@@ -28,6 +28,10 @@ public:
 
 	UBaseStatsComponent* GetHealthComponent() { return HealthComponent; }
 
+	UFUNCTION(BlueprintImplementableEvent) void HitReact(); 
+
+	void SetTakingDamage(bool newTake) { bIsTakingDamage = newTake; }
+
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Widget", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UWidgetComponent> HealthBar;
@@ -38,4 +42,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UBaseStatsComponent> HealthComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (AllowPrivateAccess = true))
+	bool bIsTakingDamage = false;
 };

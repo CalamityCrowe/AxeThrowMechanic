@@ -29,14 +29,16 @@ void UBaseStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// ...
 }
 
-void UBaseStatsComponent::DamageHealth(float DamageAmount)
+bool UBaseStatsComponent::DamageHealth(float DamageAmount)
 {
 	Health -= DamageAmount;
 	if (Health <= 0)
 	{
 		Health = 0;
+		return (bIsAlive = false);
 		// Call the death function
 	}
+	return false; // Not dead
 }
 
 

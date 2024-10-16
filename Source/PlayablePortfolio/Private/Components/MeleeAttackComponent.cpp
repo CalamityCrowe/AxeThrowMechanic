@@ -47,14 +47,15 @@ void UMeleeAttackComponent::HitDetect()
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(ThrowableReference->GetPlayerRef());
 	TArray<FHitResult> hits;
-	UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, start, 20, objectTypes, false, actorsToIgnore, EDrawDebugTrace::ForDuration, hits, true);
+	UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, start, 20, objectTypes, false, actorsToIgnore, EDrawDebugTrace::None, hits, true);
 	if(hits.Num() > 0)
 	{
 		for (FHitResult hit : hits)
 		{
 			if (AEnemyTarget* enemy = Cast<AEnemyTarget>(hit.GetActor())) 
 			{
-				enemy->GetHealthComponent()->DamageHealth(1);
+				enemy->HitReact();
+				enemy->SetTakingDamage(true);
 			}
 		}
 	}
